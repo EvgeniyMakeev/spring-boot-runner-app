@@ -2,6 +2,7 @@ package dev.makeev.springbootrunnerapp;
 
 import dev.makeev.springbootrunnerapp.run.Location;
 import dev.makeev.springbootrunnerapp.run.Run;
+import dev.makeev.springbootrunnerapp.run.RunRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -21,15 +22,16 @@ public class Application {
 	}
 
 	@Bean
-	CommandLineRunner runner() {
+	CommandLineRunner runner(RunRepository runRepository) {
 		return args -> {
 			Run run = new Run(
-					1,
+					7,
 					"First run",
 					LocalDateTime.now(),
 					LocalDateTime.now().plusHours(2),
 					12,
 					Location.OUTDOOR);
+			runRepository.create(run);
 			log.info("Run: " + run);
 		};
 	}
